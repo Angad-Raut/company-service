@@ -1,0 +1,40 @@
+version: '1.0'
+services:
+  mysql:
+    container_name: mysqlCompanyDB
+    image: mysql
+    volumes:
+      - mysql-company-data:/var/lib/mysql  # Volume configuration for MySQL data
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: companyDetailsDB
+      MYSQL_ROOT_PASSWORD: angad@db
+    networks:
+      - company-details-network
+
+  company-service-app:
+    #container_name: k8s-mysql-demo-container
+    image: company-details
+    restart: always
+    build: .
+    ports:
+      - 1990:1990
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: companyDetailsDB
+      MYSQL_USER: root
+      MYSQL_PASSWORD: angad@db
+      MYSQL_PORT: 3306
+    networks:
+      - company-details-network
+
+networks:
+  company-details-network:
+    driver: bridge
+
+volumes:
+  mysql-company-data:
+    driver: local
+
