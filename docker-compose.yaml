@@ -6,7 +6,7 @@ services:
     volumes:
       - mysql-company-data:/var/lib/mysql  # Volume configuration for MySQL data
     ports:
-      - 3306:3306
+      - 3309:3306
     environment:
       MYSQL_DATABASE: companyDetailsDB
       MYSQL_ROOT_PASSWORD: angad@db
@@ -23,7 +23,7 @@ services:
     depends_on:
       - mysql
     environment:
-      MYSQL_HOST: companyDetailsDB
+      MYSQL_HOST: mysqlCompanyDB
       MYSQL_USER: root
       MYSQL_PASSWORD: angad@db
       MYSQL_PORT: 3306
